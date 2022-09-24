@@ -158,5 +158,9 @@
         transition: 0.3s;
       }
       .state-indicator{ content: 'mobile'; }
+      .close-image{
+        background-color: transparent;
+        border: none;
+      }
       
   }
