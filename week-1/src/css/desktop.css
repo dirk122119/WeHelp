@@ -127,7 +127,12 @@
         bottom: 0px;
         
     }
-
-    
+    .sidebar{
+        display:none;
+    }
+    .sidebaritem{
+        display:none;
+    }
+    .state-indicator{ content: 'desktop'; }
 
 }

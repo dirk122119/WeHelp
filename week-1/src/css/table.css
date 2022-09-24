@@ -127,4 +127,11 @@
         bottom: 25px;
         
     }
+    .sidebar{
+        display:none;
+    }
+    .sidebaritem{
+        display:none;
+    }
+    .state-indicator{ content: 'tablet'; }
   }

@@ -157,5 +157,6 @@
         display: block;
         transition: 0.3s;
       }
+      .state-indicator{ content: 'mobile'; }
       
   }
