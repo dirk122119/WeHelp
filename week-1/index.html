@@ -62,8 +62,7 @@
     function btnClick(){
         var toggleElement = document.getElementsByClassName("toggle-btn"); 
         var sidebarElement = document.getElementById("mySidebar");     
-        toggleElement[0].style.setProperty("display","none")
-        sidebarElement.style.setProperty("width","150px")
+        sidebarElement.style.width='150px'
     }
 
     document.addEventListener("click", event=>{
@@ -75,8 +74,7 @@
         if (event.target.parentElement.id!="close-image" && event.target.classList!="sidebar" && event.target.tagName!="A"){
             var toggleElement = document.getElementsByClassName("toggle-btn");
             var sidebarElement = document.getElementById("mySidebar");
-            toggleElement[0].style.setProperty("display","flex")
-            // sidebarElement.style.setProperty("width","0px")
+            sidebarElement.style.width="0px"
         }
     }
     });
