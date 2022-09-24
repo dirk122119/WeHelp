@@ -20,7 +20,7 @@
     <header>
         <div class="logo"><a>My website</a></div>
         <div class="toggle-btn">
-            <button class="close-image" onclick="btnClick()"><img src="./src/image/1814109_hamburger_menu_icon.png" alt="Cinque Terre" width="75" height="50"></button>
+            <button id="close-image" class="close-image" onclick="btnClick()"><img src="./src/image/1814109_hamburger_menu_icon.png" alt="Cinque Terre" width="75" height="50"></button>
             
         </div>
         <nav>
@@ -71,8 +71,8 @@
         if (window.matchMedia("(max-width: 600px)").matches) {
         // Viewport is less or equal to 700 pixels wide
         
-         
-        if (event.target.src!="./src/image/1814109_hamburger_menu_icon.png" && event.target.classList!="sidebar"&& event.target.tagName!="A"){
+        
+        if (event.target.parentElement.id!="close-image" && event.target.classList!="sidebar" && event.target.tagName!="A"){
             var toggleElement = document.getElementsByClassName("toggle-btn");
             var sidebarElement = document.getElementById("mySidebar");
             toggleElement[0].style.setProperty("display","flex")
