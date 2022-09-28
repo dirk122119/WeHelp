@@ -83,8 +83,8 @@ function maxProduct(nums) {
         }
 
         if (j < i) {
-          done === true;
-          break;
+          done = true;
+          
         } else {
           // swap(nums, i, j);
           [nums[i], nums[j]] = [nums[j], nums[i]];
