@@ -1,4 +1,5 @@
 // 第一題
+//O(n)
 function calculate(min, max, step) {
   var sum = 0;
   for (var i = min; i < max + 1; i = i + step) {
@@ -11,6 +12,7 @@ calculate(4, 8, 2);
 calculate(-1, 2, 2);
 
 //第二題
+//O(n)
 function avg(data) {
   sum = 0;
   nonmanagerNum = 0;
@@ -49,6 +51,7 @@ avg({
 });
 
 // 第三題
+//O(1)
 function func(a) {
   return operator;
   function operator(b, c) {
@@ -60,6 +63,7 @@ func(5)(1, -5);
 func(-3)(2, 9);
 
 //第四題 用quicksort 由大到小排序，比前兩個數字相乘或最後兩個負數相乘
+//O(nlogn)
 function maxProduct(nums) {
   function swap(nums, leftIndex, rightIndex) {
     var temp = nums[leftIndex];
@@ -127,6 +131,7 @@ maxProduct([5, -1, -2, 0]);
 maxProduct([-5, -2]);
 
 //第五題
+//O(n^2)
 function twoSum(nums, target) {
   // your code here
   for (var i = 0; i < nums.length; i++) {
@@ -141,6 +146,7 @@ let result = twoSum([2, 11, 7, 15], 9);
 console.log(result);
 
 //第六題
+//O(n)
 function maxZeros(nums) {
   var numString = "";
   for (var i = 0; i < nums.length; i++) {

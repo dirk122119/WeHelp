@@ -1,6 +1,7 @@
 # 第一題slide方式印出總和
 # input (min,max,step)
-# output sum 
+# output sum
+#O(n)
 def calculate(min,max,step):
     temp=0
     for i in range(min,max+1,step):
@@ -12,11 +13,12 @@ calculate(-1,2,2)
 
 # 第二題list and dic 得到非manager薪水平均值
 # input json file
-# output 平均薪資 
+# output 平均薪資
+#O(n)
 def avg(data):
     sum=0
     nonmanagerNumber=0
-    for item in data["employees"]:
+    for item in data["employees"]:  
         if not item["manager"]:
             nonmanagerNumber+=1
             sum+=item["salary"]
@@ -52,6 +54,7 @@ avg({
 # f(a)(b) calls f with one parameter a, which then returns another function, which is then called with one parameter b
 # input (a)(int2,int3)
 # output int2*int3+int1
+#O(1)
 def func(a):
     def operator(int1,int2):   
         return print(int1*int2+a)
@@ -62,7 +65,7 @@ func(5)(1,-5)
 func(-3)(2,9)
 
 # 第四題 練一下刻bubble sort由大到小排序，比前兩個數字相乘或最後兩個負數相乘
-# bubble sort -> O(nlogn)
+# bubble sort -> O(n^2)
 # 兩個迴圈 ->O(n^2)
 def maxProduct(nums):
     # bubble sort 遞迴
@@ -82,16 +85,13 @@ def maxProduct(nums):
     nums=sort(length,nums)
 
     # 排序完找是否最後兩個負數相乘大於前兩個正整數
-    negNum=[x for x in nums if x<0]
+    lastTwoItem=nums[-1]*nums[-2]
     firstTwoItem=nums[0]*nums[1]
-    if len(negNum)>1:
-        lastTwoItem=nums[-2]*nums[-1]
-        if firstTwoItem>=lastTwoItem:
-            print(firstTwoItem)
-        else:
-            print(lastTwoItem)
-    else:
+    if (firstTwoItem>lastTwoItem):
         print(firstTwoItem)
+    else:
+        print(lastTwoItem)
+    
   
 maxProduct([5, 20, 2, 6])
 maxProduct([10, -20, 0, 3])
@@ -102,6 +102,7 @@ maxProduct([5,-1, -2, 0])
 maxProduct([-5, -2])
 
 #第五題two sum
+# O(n^2)
 def twoSum(nums, target):
     for idx,item in enumerate(nums):
         try:
@@ -113,6 +114,7 @@ result=twoSum([2, 11, 7, 15], 9)
 print(result)
 
 #第六題 找0最長的長度
+# O(n)
 def maxZeros(nums):
     # 先轉成字串
     listToString=''
