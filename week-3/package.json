@@ -1,0 +1,16 @@
+{
+  "name": "week-3",
+  "version": "1.0.0",
+  "description": "wehelp",
+  "main": "fetch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cross-fetch": "^3.1.5",
+    "node-fetch": "^3.2.10"
+  }
+}
