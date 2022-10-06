@@ -72,7 +72,7 @@ function areaCenterElementAdd(data, n) {
     else{
       console.log(data["result"]["results"].length)
       document.getElementById("loadMore").style.display = 'none';
-      alert("已顯示全部");
+      alert("顯示全部");
       break;
     }
   }
