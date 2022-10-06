@@ -71,8 +71,7 @@ def w3SecondAssignment():
     
     
 
-
-
+w3FirstAssignment()
 w3SecondAssignment()
                 
         
