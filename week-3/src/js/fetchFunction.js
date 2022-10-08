@@ -1,5 +1,26 @@
 // import fetch from "cross-fetch";
 
+function getData() {
+  return fetch(
+    "https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment.json"
+  ).then((response) => response.json());
+}
+
+const request = getData();
+
+function fun2(request) {
+  request.then((data) => {
+    if (flag === 0) {
+      areaTopElementAdd(data);
+      flag = 1;
+    }
+
+    areaCenterElementAdd(data, num);
+  });
+}
+
+
+
 async function fun(num) {
   const reponse = await fetch(
     "https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment.json"
@@ -12,6 +33,7 @@ async function fun(num) {
 
   areaCenterElementAdd(data, num);
 }
+
 function areaTopElementAdd(data) {
   let el = document.getElementById("areaTop");
 
@@ -68,10 +90,9 @@ function areaCenterElementAdd(data, n) {
       //newBox.appendChild(newA);
       newDiv.appendChild(newA);
       el.appendChild(newDiv);
-    }
-    else{
-      console.log(data["result"]["results"].length)
-      document.getElementById("loadMore").style.display = 'none';
+    } else {
+      console.log(data["result"]["results"].length);
+      document.getElementById("loadMore").style.display = "none";
       alert("顯示全部");
       break;
     }
@@ -79,9 +100,11 @@ function areaCenterElementAdd(data, n) {
 }
 let num = 8;
 let flag = 0;
-fun(num);
+//fun(num);
+fun2(request, num);
 
 function loadmore() {
   num = num + 8;
-  fun(num);
+  //fun(num);
+  fun2(request, num);
 }
