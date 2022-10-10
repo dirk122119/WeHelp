@@ -16,7 +16,7 @@ def signin():
             session['username'] = request.form['username']
             return redirect(url_for('member'))
 
-    return redirect(url_for('error',message='login fail'))
+    return redirect(url_for('error',message="loginFail"))
         
 @app.route("/member")
 def member():
