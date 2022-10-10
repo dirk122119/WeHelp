@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>week4</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" />
+  </head>
+  <body>
+    <header class="head">
+      <h1 class="banner">歡迎光臨，請輸入帳號密碼</h1>
+    </header>
+    <h1 style="text-align: center">登入系統</h1>
+    <form
+      action="{{url_for('signin')}}"
+      method="POST"
+      style="margin: auto; width: 200px"
+    >
+      <div>
+        <a>帳號</a>
+        <input type="text" name="username" />
+      </div>
+
+      <div>
+        <a>密碼</a>
+        <input type="password" name="password" />
+      </div>
+      <div style="text-align: center">
+        <button type="submit">登入</button>
+      </div>
+    </form>
+
+    <hr />
+
+    <form id="squareForm"
+    action="{{url_for('squareInput')}}"
+      method="POST"
+      style="margin: auto; width: 200px"
+    >
+      <div>
+        <a>正整數</a>
+        <input type="text" id="squareNum" name="inputNum" />
+      </div>
+      <div style="text-align: center">
+        <button type="submit">登入</button>
+      </div>
+    </form>
+  </body>
+  
+</html>
