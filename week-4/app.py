@@ -47,5 +47,5 @@ def square(number):
     return render_template("squarePage.html",output=answer)
 
 if __name__ == '__main__':
-    app.debug=True
+    app.debug=False
     app.run(host="0.0.0.0", port=3000)
