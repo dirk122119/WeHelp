@@ -15,8 +15,11 @@ def signin():
         if(request.form['username']=="test" and request.form['password']=="test"):
             session['username'] = request.form['username']
             return redirect(url_for('member'))
+        elif(not request.form['username'] or not request.form['password']):
+            return redirect(url_for('error',message="請輸入帳號、密碼"))
+        else:
+            return redirect(url_for('error',message="帳號或密碼錯誤"))
 
-    return redirect(url_for('error',message="loginFail"))
         
 @app.route("/member")
 def member():
@@ -27,7 +30,8 @@ def member():
 
 @app.route("/error",methods=['GET'])
 def error():
-    return render_template("errorPage.html")
+    message = request.args.get('message')
+    return render_template("errorPage.html",message=message)
 
 @app.route("/logout")
 def logout():
