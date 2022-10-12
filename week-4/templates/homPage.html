@@ -41,7 +41,7 @@
       <input type="submit" value="計算" onclick="return fetchToServer()" />
     </div>
 
-    
+
   </body>
   <script>
     function fetchToServer(){
@@ -51,9 +51,14 @@
         alert("不是數字");
       }
       else{
-      //const getUrl = {{ url_for('square',number=num)|tojson }};
-      const getUrl = {{ url_for('square',number='')|tojson }}+num;
-      fetch(getUrl, {
+      // const getUrlDoc = {{url_for('square',number=num)|tojson }};
+      // const getUrl = {{ url_for('square',number='')|tojson }}+num;
+      // console.log("url_for('square',number=2)|tojson")
+      // console.log(getUrlDoc)
+      // console.log("url_for('square',number='')|tojson +num")
+      // console.log(getUrl)
+
+      fetch(`/square/${num}`, {
         "method": "POST",
         "body": num,})
         .then(
