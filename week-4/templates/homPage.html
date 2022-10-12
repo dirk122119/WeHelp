@@ -23,7 +23,7 @@
       </div>
 
       <div>
-        <label >密碼</label>
+        <label>密碼</label>
         <input type="password" name="password" />
       </div>
       <div style="text-align: center">
@@ -33,19 +33,37 @@
 
     <hr />
 
-    <form id="squareForm"
-    action="{{url_for('squareInput')}}"
-      method="POST"
-      style="margin: auto; width: 200px"
-    >
-      <div>
-        <label>正整數</label>
-        <input type="text" name="inputNum" />
-      </div>
-      <div style="text-align: center">
-        <button type="submit">計算</button>
-      </div>
-    </form>
+    <div style="text-align: center">
+      <label>正整數</label>
+      <input type="text" id="num" name="inputNum" />
+    </div>
+    <div style="text-align: center">
+      <input type="submit" value="計算" onclick="return fetchToServer()" />
+    </div>
+
+    
   </body>
-  
+  <script>
+    function fetchToServer(){
+      let num = document.getElementById("num").value;
+      if(!+num)
+      {
+        alert("不是數字");
+      }
+      else{
+      //const getUrl = {{ url_for('square',number=num)|tojson }};
+      const getUrl = {{ url_for('square',number='')|tojson }}+num;
+      fetch(getUrl, {
+        "method": "POST",
+        "body": num,})
+        .then(
+          response => {
+            if (response.url) {window.location = response.url}
+            else {alert("error")}
+          }
+        )}
+      };
+
+
+  </script>
 </html>

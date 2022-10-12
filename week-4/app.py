@@ -38,13 +38,6 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('hompage'))
 
-
-@app.route("/squareInput",methods=['GET','POST'])
-def squareInput():
-    if request.method == "POST":
-        return redirect(url_for('square',number=request.form['inputNum']))
-    return redirect(url_for('hompage'))
-
 @app.route("/square/<number>",methods=['GET','POST'])
 def square(number):
     answer=str(int(number)*int(number))
