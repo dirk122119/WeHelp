@@ -51,13 +51,13 @@
         alert("不是數字");
       }
       else{
-      // const getUrlDoc = {{url_for('square',number=num)|tojson }};
+      const getUrlDoc = {{url_for('square',number=num)|tojson }};
       // const getUrl = {{ url_for('square',number='')|tojson }}+num;
       // console.log("url_for('square',number=2)|tojson")
-      // console.log(getUrlDoc)
+      console.log(getUrlDoc);
       // console.log("url_for('square',number='')|tojson +num")
       // console.log(getUrl)
-
+      // return 0;
       fetch(`/square/${num}`, {
         "method": "POST",
         "body": num,})
