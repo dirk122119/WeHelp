@@ -49,14 +49,18 @@ safe_update
 ![](/week-5/img/checkMemberSumandAvg.png)
 
 # 要求五
-*使用 SELECT 搭配 JOIN 語法，取得所有留言，結果須包含留言者會員的姓名。
+* 使用 SELECT 搭配 JOIN 語法，取得所有留言，結果須包含留言者會員的姓名。
 
 ![](/week-5/img/joinAll.png)
 
-*使用 SELECT 搭配 JOIN 語法，取得 member 資料表中欄位 username 是 test 的所有留言，資料中須包含留言者會員的姓名。
+* 使用 SELECT 搭配 JOIN 語法，取得 member 資料表中欄位 username 是 test 的所有留言，資料中須包含留言者會員的姓名。
 
 ![](/week-5/img/jointest.png)
 
-*使用 SELECT、SQL Aggregate Functions 搭配 JOIN 語法，取得 member 資料表中欄位 username 是 test 的所有留言平均按讚數。
+* 使用 SELECT、SQL Aggregate Functions 搭配 JOIN 語法，取得 member 資料表中欄位 username 是 test 的所有留言平均按讚數。
 
 ![](/week-5/img/joinavg.png)
+
+* 使用FOREIGN KEY
+
+![](/week-5/img/foreignkey.png)
