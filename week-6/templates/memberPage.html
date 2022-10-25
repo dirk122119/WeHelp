@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>week4</title>
+    <title>week6</title>
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 </head>
 <body>
@@ -15,7 +15,39 @@
     <div  style="text-align: center;">
         <a href="{{url_for('logout')}}">登出系統</a>
     </div>
-    
+    <hr/>
+    <h1 style="text-align: center;">快來留言吧</h1>
+    <div style="text-align: center">
+        <label>內容</label>
+        <input type="text" id="str" name="inputStr" />
+      </div>
+      <div style="text-align: center">
+        <input type="submit" value="送出" onclick="return fetchToServer()" />
+    </div>
+
+    <h1 style="text-align: center;">留言區</h1>
+    {% for name,message in text %}
+    <div style="text-align: center"><strong>{{name}}</strong> : {{message}}</div>
+    {% endfor %}
+
     
 </body>
+<script>
+    function fetchToServer(){
+      let inputStr = document.getElementById("str").value;
+      
+     
+      fetch("/message", {
+        "method": "POST",
+        "body": JSON.stringify(inputStr),
+        headers: new Headers({"content-type": "application/json"})})
+        .then(
+          response => {
+            if (response.url) {window.location = response.url}
+            else {alert("error")}
+          }
+        )};
+
+
+  </script>
 </html>
