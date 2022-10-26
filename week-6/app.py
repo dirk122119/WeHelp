@@ -12,51 +12,48 @@ def hompage():
 
 @app.route("/signin",methods=['POST'])
 def signin():
-    if request.method == "POST":
-        if(request.form['username'] and request.form['password']):
-            mydb = mysql.connector.connect(user='root', password='dddddddd',host='127.0.0.1',port=3306,database='website')
-            if mydb.is_connected():
-                cursor = mydb.cursor()
-                sql="SELECT name,id from member WHERE username=%s and password=%s"
-                val=(request.form['username'],request.form['password'])
-                cursor.execute(sql,val)
-                result=cursor.fetchall()
-                if len(result)==1:
-                    session['username'] = request.form['username']
-                    session['name'] = result[0][0]
-                    session['id'] = result[0][1]
-                    return redirect(url_for('member'))
-                else:
-                    return redirect(url_for('error',message="帳號或密碼錯誤"))
-        elif(not request.form['username'] or not request.form['password']):
-            return redirect(url_for('error',message="請輸入帳號、密碼"))
-        else:
-            return redirect(url_for('error',message="帳號或密碼錯誤"))
+    if(request.form['username'] and request.form['password']):
+        mydb = mysql.connector.connect(user='root', password='dddddddd',host='127.0.0.1',port=3306,database='website')
+        if mydb.is_connected():
+            cursor = mydb.cursor()
+            sql="SELECT name,id from member WHERE username=%s and password=%s"
+            val=(request.form['username'],request.form['password'])
+            cursor.execute(sql,val)
+            result=cursor.fetchall()
+            if len(result)==1:
+                session['username'] = request.form['username']
+                session['name'] = result[0][0]
+                session['id'] = result[0][1]
+                return redirect(url_for('member'))
+            else:
+                return redirect(url_for('error',message="帳號或密碼錯誤"))
+    elif(not request.form['username'] or not request.form['password']):
+        return redirect(url_for('error',message="請輸入帳號、密碼"))
+    else:
+        return redirect(url_for('error',message="帳號或密碼錯誤"))
 
-@app.route("/signup",methods=['GET','POST'])
+@app.route("/signup",methods=['POST'])
 def signup():
-    if request.method == "POST":
-
-        if(request.form['username'] and request.form['password']):
-            mydb = mysql.connector.connect(user='root', password='dddddddd',host='127.0.0.1',port=3306,database='website')
-            if mydb.is_connected():
-                cursor = mydb.cursor()
-                sql="SELECT * from member WHERE username=%s"
-                val=(request.form['username'],)##(str,)這樣才是tuple？
-                cursor.execute(sql,val)
-                result=cursor.fetchall()
-                if len(result):
-                    return redirect(url_for('error',message="帳號已經被註冊"))
-                else:
-                    sql = "INSERT INTO member (name,username,password) VALUES (%s, %s,%s)"
-                    val = (request.form['name'], request.form['username'],request.form['password'])
-                    cursor.execute(sql, val)
-                    mydb.commit()
-                    return redirect(url_for('member'))
-        elif(not request.form['username'] or not request.form['password']):
-            return redirect(url_for('error',message="請輸入帳號、密碼"))
-        else:
-            return redirect(url_for('error',message="帳號或密碼錯誤"))
+    if(request.form['username'] and request.form['password']):
+        mydb = mysql.connector.connect(user='root', password='dddddddd',host='127.0.0.1',port=3306,database='website')
+        if mydb.is_connected():
+            cursor = mydb.cursor()
+            sql="SELECT * from member WHERE username=%s"
+            val=(request.form['username'],)##(str,)這樣才是tuple？
+            cursor.execute(sql,val)
+            result=cursor.fetchall()
+            if len(result):
+                return redirect(url_for('error',message="帳號已經被註冊"))
+            else:
+                sql = "INSERT INTO member (name,username,password) VALUES (%s, %s,%s)"
+                val = (request.form['name'], request.form['username'],request.form['password'])
+                cursor.execute(sql, val)
+                mydb.commit()
+                return redirect(url_for('member'))
+    elif(not request.form['username'] or not request.form['password']):
+        return redirect(url_for('error',message="請輸入帳號、密碼"))
+    else:
+        return redirect(url_for('error',message="帳號或密碼錯誤"))
         
 @app.route("/member")
 def member():
@@ -80,8 +77,8 @@ def error():
     message = request.args.get('message')
     return render_template("errorPage.html",message=message)
 
-@app.route("/logout")
-def logout():
+@app.route("/signout")
+def signout():
     session.pop('id', None)
     session.pop('name', None)
     session.pop('username', None)
