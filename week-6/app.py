@@ -18,9 +18,8 @@ def create_connection_pool():
 
 try:
     cnx=create_connection_pool()
-    connect=cnx.get_connection()
 except:
-    print("無法連接資料庫")
+    print("無法建立connect pool")
 
 
 @app.route("/")
@@ -32,7 +31,8 @@ def hompage():
 @app.route("/signin",methods=['POST'])
 def signin():
     if(request.form['username'] and request.form['password']):
-        cursor = connect.cursor()
+        connect_objt=cnx.get_connection()
+        cursor = connect_objt.cursor()
         sql="SELECT name,id from member WHERE username=%s and password=%s"
         val=(request.form['username'],request.form['password'])
         cursor.execute(sql,val)
@@ -42,9 +42,11 @@ def signin():
             session['name'] = result[0][0]
             session['id'] = result[0][1]
             cursor.close()
+            connect_objt.close()
             return redirect(url_for('member'))
         else:
             cursor.close()
+            connect_objt.close()
             return redirect(url_for('error',message="帳號或密碼錯誤"))
     elif(not request.form['username'] or not request.form['password']):
         return redirect(url_for('error',message="請輸入帳號、密碼"))
@@ -54,20 +56,23 @@ def signin():
 @app.route("/signup",methods=['POST'])
 def signup():
     if(request.form['username'] and request.form['password']):
-        cursor = connect.cursor()
+        connect_objt=cnx.get_connection()
+        cursor = connect_objt.cursor()
         sql="SELECT * from member WHERE username=%s"
         val=(request.form['username'],)##(str,)這樣才是tuple？
         cursor.execute(sql,val)
         result=cursor.fetchall()
         if len(result):
             cursor.close()
+            connect_objt.close()
             return redirect(url_for('error',message="帳號已經被註冊"))
         else:
             sql = "INSERT INTO member (name,username,password) VALUES (%s, %s,%s)"
             val = (request.form['name'], request.form['username'],request.form['password'])
             cursor.execute(sql, val)
-            connect.commit()
+            connect_objt.commit()
             cursor.close()
+            connect_objt.close()
             return redirect(url_for('member'))
     elif(not request.form['username'] or not request.form['password']):
         return redirect(url_for('error',message="請輸入帳號、密碼"))
@@ -79,12 +84,14 @@ def member():
     if 'username' in session:
         name = session['name']
         text=[]
-        cursor = connect.cursor()
+        connect_objt=cnx.get_connection()
+        cursor = connect_objt.cursor()
         sql="SELECT member.name,message.content from member inner join message on member.id=message.member_id"
         cursor.execute(sql)
         for memberName,messageContent in cursor:
             text.append((memberName,messageContent))
         cursor.close()
+        connect_objt.close()
         return render_template("memberPage.html",name=name,text=text)
     else:
         return redirect(url_for('hompage'))
@@ -104,12 +111,14 @@ def signout():
 
 @app.route("/message",methods=['POST'])
 def message():
-    cursor = connect.cursor()
+    connect_objt=cnx.get_connection()
+    cursor = connect_objt.cursor()
     sql="insert into message(member_id,content) values(%s,%s)"
     val=(session['id'],request.get_json())##(str,)這樣才是tuple？
     cursor.execute(sql, val)
-    connect.commit()
+    connect_objt.commit()
     cursor.close()
+    connect_objt.close()
     return redirect(url_for('member'))
 
 if __name__ == '__main__':
