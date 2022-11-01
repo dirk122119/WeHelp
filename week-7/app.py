@@ -1,6 +1,8 @@
 from urllib import response
 from flask import Flask,render_template,request,redirect,url_for,session
 import mysql.connector
+from flask import jsonify
+
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
@@ -83,16 +85,8 @@ def signup():
 def member():
     if 'username' in session:
         name = session['name']
-        text=[]
-        connect_objt=cnx.get_connection()
-        cursor = connect_objt.cursor()
-        sql="SELECT member.name,message.content from member inner join message on member.id=message.member_id"
-        cursor.execute(sql)
-        for memberName,messageContent in cursor:
-            text.append((memberName,messageContent))
-        cursor.close()
-        connect_objt.close()
-        return render_template("memberPage.html",name=name,text=text)
+        
+        return render_template("memberPage.html",name=name)
     else:
         return redirect(url_for('hompage'))
 
@@ -120,6 +114,43 @@ def message():
     cursor.close()
     connect_objt.close()
     return redirect(url_for('member'))
+
+#============================API Function============================#
+@app.route("/api/member",methods=["GET","PATCH"])
+def memberApi():
+    
+    if request.method=="GET":
+        if 'username' in session:
+            userName = request.args.get('username')
+            connect_objt=cnx.get_connection()
+            cursor = connect_objt.cursor()
+            sql="SELECT id,name,username from member WHERE username=%s"
+            val=(userName,)
+            cursor.execute(sql,val)
+            result=cursor.fetchone()
+            returnStr={"data":{"id":result[0],"name":result[1],"username":result[2]}}
+            cursor.close()
+            connect_objt.close()
+            return jsonify(returnStr)
+        else:
+            return jsonify({"data":None})
+    elif request.method=="PATCH":
+        if 'username' in session:
+            print("now patch")
+            print(request.get_json())
+            connect_objt=cnx.get_connection()
+            cursor = connect_objt.cursor()
+            sql="UPDATE member SET name=%s WHERE id=%s"
+            val=(request.get_json(),session["id"])
+            cursor.execute(sql,val)
+            connect_objt.commit()
+            session['name']=request.get_json()
+            cursor.close()
+            connect_objt.close()
+            return jsonify({"OK":True})
+        else:
+            return jsonify({"error":True})
+    
 
 if __name__ == '__main__':
     app.debug=True

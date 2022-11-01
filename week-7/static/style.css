@@ -1,0 +1,13 @@
+.head{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(29, 51, 70);
+    height: 200px;
+    width: 100%;
+}
+.banner{
+    margin: 0;
+    color: white;
+    text-align: center;
+    padding-top: 100px;
+}
