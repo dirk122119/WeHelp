@@ -74,7 +74,7 @@
       let updateUsername = document.getElementById("updateUsername").value;
       fetch("/api/member", {
         method: "PATCH",
-        body: JSON.stringify(updateUsername),
+        body: JSON.stringify({"name":updateUsername}),
         headers: { "content-type": "application/json" },
       })
         .then((response) => response.json())

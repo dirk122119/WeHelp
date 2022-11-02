@@ -136,12 +136,10 @@ def memberApi():
             return jsonify({"data":None})
     elif request.method=="PATCH":
         if 'username' in session:
-            print("now patch")
-            print(request.get_json())
             connect_objt=cnx.get_connection()
             cursor = connect_objt.cursor()
             sql="UPDATE member SET name=%s WHERE id=%s"
-            val=(request.get_json(),session["id"])
+            val=(request.get_json()["name"],session["id"])
             cursor.execute(sql,val)
             connect_objt.commit()
             session['name']=request.get_json()
