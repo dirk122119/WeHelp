@@ -38,11 +38,11 @@ def signin():
         sql="SELECT name,id from member WHERE username=%s and password=%s"
         val=(request.form['username'],request.form['password'])
         cursor.execute(sql,val)
-        result=cursor.fetchall()
-        if len(result)==1:
+        result=cursor.fetchone()
+        if(result):
             session['username'] = request.form['username']
-            session['name'] = result[0][0]
-            session['id'] = result[0][1]
+            session['name'] = result[0]
+            session['id'] = result[1]
             cursor.close()
             connect_objt.close()
             return redirect(url_for('member'))
@@ -63,8 +63,8 @@ def signup():
         sql="SELECT * from member WHERE username=%s"
         val=(request.form['username'],)##(str,)這樣才是tuple？
         cursor.execute(sql,val)
-        result=cursor.fetchall()
-        if len(result):
+        result=cursor.fetchone()
+        if(result):
             cursor.close()
             connect_objt.close()
             return redirect(url_for('error',message="帳號已經被註冊"))
@@ -103,17 +103,6 @@ def signout():
 
     return redirect(url_for('hompage'))
 
-@app.route("/message",methods=['POST'])
-def message():
-    connect_objt=cnx.get_connection()
-    cursor = connect_objt.cursor()
-    sql="insert into message(member_id,content) values(%s,%s)"
-    val=(session['id'],request.get_json())
-    cursor.execute(sql, val)
-    connect_objt.commit()
-    cursor.close()
-    connect_objt.close()
-    return redirect(url_for('member'))
 
 #============================API Function============================#
 @app.route("/api/member",methods=["GET","PATCH"])
@@ -128,10 +117,13 @@ def memberApi():
             val=(userName,)
             cursor.execute(sql,val)
             result=cursor.fetchone()
-            returnStr={"data":{"id":result[0],"name":result[1],"username":result[2]}}
             cursor.close()
             connect_objt.close()
-            return jsonify(returnStr)
+            if(result):
+                returnStr={"data":{"id":result[0],"name":result[1],"username":result[2]}}
+                return jsonify(returnStr)
+            else:
+                return jsonify({"data":None})
         else:
             return jsonify({"data":None})
     elif request.method=="PATCH":
@@ -142,7 +134,7 @@ def memberApi():
             val=(request.get_json()["name"],session["id"])
             cursor.execute(sql,val)
             connect_objt.commit()
-            session['name']=request.get_json()
+            session['name']=request.get_json()["name"]
             cursor.close()
             connect_objt.close()
             return jsonify({"OK":True})
