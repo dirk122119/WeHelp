@@ -5,7 +5,6 @@ from flask import jsonify
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-
 def create_connection_pool():
     db_config = {
         'host' : 'localhost',
